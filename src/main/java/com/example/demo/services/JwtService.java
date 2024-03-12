@@ -29,6 +29,10 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
+//    public Long extractUserId(String token) {
+//        return Long.parseLong(extractClaim(token, Claims::getSubject));
+//    }
+
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }

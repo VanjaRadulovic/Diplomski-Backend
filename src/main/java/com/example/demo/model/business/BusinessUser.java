@@ -1,6 +1,7 @@
-package com.example.demo.model;
+package com.example.demo.model.business;
 
-
+import com.example.demo.model.Role;
+import com.example.demo.model.business.Business;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,14 +13,16 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
+
+
 @Data
 @Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(name="users")
-public class User implements UserDetails {
+@Table(name="businesUsers")
+public class BusinessUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +36,8 @@ public class User implements UserDetails {
     private Role role;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    @OneToMany(mappedBy = "businessUser", cascade = CascadeType.ALL)
+    private List<Business> businesses;
 
 
     @Override
@@ -64,5 +69,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 }

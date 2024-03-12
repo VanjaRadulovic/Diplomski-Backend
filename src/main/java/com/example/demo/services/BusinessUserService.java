@@ -1,8 +1,8 @@
 package com.example.demo.services;
 
-import com.example.demo.dtos.UserData;
-import com.example.demo.model.User;
-import com.example.demo.repositories.UserRepository;
+import com.example.demo.model.business.BusinessUser;
+
+import com.example.demo.repositories.BusinessUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,40 +10,30 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
-
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class BusinessUserService {
 
-    private final UserRepository userRepository;
+    private final BusinessUserRepository businessUserRepository;
 
     public UserDetailsService userDetailsService() {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) {
-                return userRepository.findByEmail(username)
+                return businessUserRepository.findByEmail(username)
                         .orElseThrow(() -> new UsernameNotFoundException("User not found"));
             }
         };
     }
 
-    public User save(User newUser) {
+    public BusinessUser save(BusinessUser newUser) {
         if (newUser.getId() == null) {
             newUser.setCreatedAt(LocalDateTime.now());
         }
 
         newUser.setUpdatedAt(LocalDateTime.now());
-        return userRepository.save(newUser);
+        return businessUserRepository.save(newUser);
     }
-
-    public UserData getUserData(String email){
-        Optional<User> user = userRepository.findByEmail(email);
-        UserData userData = new UserData(user.get().getFirstName(),user.get().getLastName(),user.get().getEmail(),user.get().getRole().toString());
-        return userData;
-    }
-
-
 
 }
