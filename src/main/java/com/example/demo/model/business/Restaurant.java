@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Restaurant  extends Business {
+public class Restaurant extends Business {
 
     private String price;
     @OneToOne(cascade = CascadeType.ALL)
